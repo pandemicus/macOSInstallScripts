@@ -1,32 +1,32 @@
 #!/bin/zsh
 
-# Enter the id in the urlId variable
+# Enter the id in the urlId variable,
 # or use $4 if using a script parameter with Jamf Pro.
 
-urlId="" # e.g. "869428" for Teams
+urlId="" # e.g. "869428" for Teams.
 
-#	AutoUpdate (MAU) Standalone       830196
-#	Edge Consumer Beta 	              2069439
-#	Edge Consumer Canary 	            2069147
-#	Edge Consumer Dev                 2069340
-#	Edge Consumer Stable              2069148
-#	Edge Enterprise Beta              2093294
-#	Edge Enterprise Dev	              2093292
-#	Edge Enterprise Stable	          2093438
-#	Excel 365/2019 Standalone         525135
-#	Intune Company Portal Standalone  869655
-#	Office 365 BusinessPro Suite      2009112
-#	Office 365/2019 Suite             525133
-#	OneDrive Standalone               823060
-#	OneNote Free Standalone           820886
-#	Outlook 365/2019 Standalone       525137
-#	PowerPoint 365/2019 Standalone    525136
-#	Remote Desktop Standalone         868963
-#	SharePoint Plugin                 800050
-#	Skype for Business Standalone     832978
-#	Teams Standalone                  869428
-#	Word 365/2019 Standalone          525134
-#	Defender Standalone               2097502
+# 830196  AutoUpdate (MAU) Standalone
+# 2097502 Defender Standalone
+# 2069439 Edge Consumer Beta
+# 2069147 Edge Consumer Canary
+# 2069340 Edge Consumer Dev
+# 2069148 Edge Consumer Stable
+# 2093294 Edge Enterprise Beta
+# 2093292 Edge Enterprise Dev
+# 2093438 Edge Enterprise Stable
+# 525135  Excel 365/2019 Standalone
+# 869655  Intune Company Portal Standalone
+# 2009112 Office 365 BusinessPro Suite
+# 525133  Office 365/2019 Suite
+# 823060  OneDrive Standalone
+# 820886  OneNote Free Standalone
+# 525137  Outlook 365/2019 Standalone
+# 525136  PowerPoint 365/2019 Standalone
+# 868963  Remote Desktop Standalone
+# 800050  SharePoint Plugin
+# 832978  Skype for Business Standalone
+# 869428  Teams Standalone
+# 525134  Word 365/2019 Standalone
 
 # Microsoft Developer ID
 MSDEVELOPERID="UBF8T346G9"
