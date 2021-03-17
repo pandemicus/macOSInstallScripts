@@ -3,7 +3,7 @@
 # Enter the id in the urlId variable,
 # or use $4 if using a script parameter with Jamf Pro.
 
-urlId="" # e.g. "869428" for Teams.
+urlId="$4" # e.g. "869428" for Teams.
 
 # 830196  AutoUpdate (MAU) Standalone
 # 2097502 Defender Standalone
@@ -28,6 +28,8 @@ urlId="" # e.g. "869428" for Teams.
 # 869428  Teams Standalone
 # 525134  Word 365/2019 Standalone
 
+autoload is-at-least
+
 # Microsoft Developer ID
 MSDEVELOPERID="UBF8T346G9"
 
@@ -51,8 +53,14 @@ echo "Downloading $url"
 /usr/bin/curl --location --silent "$url" -o $urlId.pkg
 
 # Check pkg developer id
-pkgDeveloperId=$(pkgutil --check-signature "$tempFolder/$urlId.pkg" | sed -n 5p | awk -F ' ' '{print $7}' | sed 's/[()]//g')
-echo "Developer id for the downloaded pkg is $pkgDeveloperId..."
+osVersion=$(sw_vers -productVersion)
+if is-at-least 10.15 "$osVersion"; then # macOS 10.15 or later
+  pkgDeveloperId=$(pkgutil --check-signature "$tempFolder/$urlId.pkg" | sed -n 5p | awk -F ' ' '{print $7}' | sed 's/[()]//g')
+  echo "Developer id for the downloaded pkg is $pkgDeveloperId..."
+else
+  pkgDeveloperId=$(pkgutil --check-signature "$tempFolder/$urlId.pkg" | sed -n 4p | awk -F ' ' '{print $7}' | sed 's/[()]//g')
+  echo "Developer id for the downloaded pkg is $pkgDeveloperId..."
+fi
 
 # Verify that the delveloper id's match and install
 if [ "$pkgDeveloperId" = "$MSDEVELOPERID" ]; then
