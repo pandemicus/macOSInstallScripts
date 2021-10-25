@@ -31,7 +31,7 @@ urlId="$4" # e.g. "869428" for Teams.
 autoload is-at-least
 
 # Microsoft Developer ID
-MSDEVELOPERID="UBF8T346G9"
+DEVELOPERID="UBF8T346G9"
 
 # Microsoft download link
 url="https://go.microsoft.com/fwlink/?linkid=$urlId"
@@ -54,16 +54,19 @@ echo "Downloading $url"
 
 # Check pkg developer id
 osVersion=$(sw_vers -productVersion)
-if is-at-least 10.15 "$osVersion"; then # macOS 10.15 or later
+if is-at-least 12 "$osVersion"; then # macOS 12 or later
+  pkgDeveloperId=$(pkgutil --check-signature "$tempFolder/$urlId.pkg" | sed -n 6p | awk -F ' ' '{print $7}' | sed 's/[()]//g')
+  echo "Developer id for the downloaded pkg is $pkgDeveloperId..."
+elif is-at-least 10.15 "$osVersion"; then # macOS 10.15 or macOS 11
   pkgDeveloperId=$(pkgutil --check-signature "$tempFolder/$urlId.pkg" | sed -n 5p | awk -F ' ' '{print $7}' | sed 's/[()]//g')
   echo "Developer id for the downloaded pkg is $pkgDeveloperId..."
-else
+else # macOS 10.14 or below
   pkgDeveloperId=$(pkgutil --check-signature "$tempFolder/$urlId.pkg" | sed -n 4p | awk -F ' ' '{print $7}' | sed 's/[()]//g')
   echo "Developer id for the downloaded pkg is $pkgDeveloperId..."
 fi
 
 # Verify that the delveloper id's match and install
-if [ "$pkgDeveloperId" = "$MSDEVELOPERID" ]; then
+if [ "$pkgDeveloperId" = "$DEVELOPERID" ]; then
   echo "Developer id's match. Continuing with installation..."
   /usr/sbin/installer -pkg "$urlId.pkg" -target /
   exitCode=0
