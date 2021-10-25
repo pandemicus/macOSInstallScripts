@@ -122,10 +122,13 @@ echo "Downloading $url"
 
 # Check pkg developer id
 osVersion=$(sw_vers -productVersion)
-if is-at-least 10.15 "$osVersion"; then # macOS 10.15 or later
+if is-at-least 12 "$osVersion"; then # macOS 12 or later
+  pkgDeveloperId=$(pkgutil --check-signature "$tempFolder/$urlId.pkg" | sed -n 6p | awk -F ' ' '{print $7}' | sed 's/[()]//g')
+  echo "Developer id for the downloaded pkg is $pkgDeveloperId..."
+elif is-at-least 10.15 "$osVersion"; then # macOS 10.15 or macOS 11
   pkgDeveloperId=$(pkgutil --check-signature "$tempFolder/$urlId.pkg" | sed -n 5p | awk -F ' ' '{print $7}' | sed 's/[()]//g')
   echo "Developer id for the downloaded pkg is $pkgDeveloperId..."
-else
+else # macOS 10.14 or below
   pkgDeveloperId=$(pkgutil --check-signature "$tempFolder/$urlId.pkg" | sed -n 4p | awk -F ' ' '{print $7}' | sed 's/[()]//g')
   echo "Developer id for the downloaded pkg is $pkgDeveloperId..."
 fi
